@@ -7,12 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Login</h1>
-<form action="/login" method="post">
-Name:    <input type="text" name="name"><br><br>
-Password:<input type="password" name = "password"><br>
-<input type="submit" value="Login">
-</form>
-<p>${errorMessage}</p>
+<h1>Welcome ${name}</h1>
+<h1>Your password is  ${password}</h1>
+
 </body>
 </html>

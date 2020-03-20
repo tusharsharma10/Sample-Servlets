@@ -33,19 +33,30 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
+	UserValidationService userValidationService = new UserValidationService();
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		// Passing request parameters
-		String name = request.getParameter("name");
-
-		request.setAttribute("name", name);
-
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 
 	}
 
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		// string "name" should match with name attribute of input field jsp
+		request.setAttribute("name", request.getParameter("name"));
+		request.setAttribute("password", request.getParameter("password"));
+
+		if (userValidationService.isUserValid(request.getParameter("name"), request.getParameter("password")))
+			request.getRequestDispatcher("/WEB-INF/views/welcome.jsp").forward(request, response);
+		else {
+			request.setAttribute("errorMessage", "Incorrect Credentials!!");
+			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+		}
+	}
 }
