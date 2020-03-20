@@ -26,19 +26,24 @@ import javax.servlet.http.HttpServletResponse;
 //a request-response programming model.
 
 //1. extends javax.servlet.http.HttpServlet
-//2. @WebServlet(urlPatterns = "/login.do")
+//2. @WebServlet(urlPatterns = "/login")
 //3. doGet(HttpServletRequest request, HttpServletResponse response)
 //4. How is the response created?
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		// Passing request parameters
+		String name = request.getParameter("name");
+
+		request.setAttribute("name", name);
+
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 
 	}
